@@ -12,6 +12,20 @@
 
 #include "get_next_line.h"
 
+void	free_str(char *s1, char *s2)
+{
+	if (s1)
+	{
+		free(s1);
+		s1 = NULL;
+	}
+	if (s2)
+	{
+		free(s2);
+		s2 = NULL;
+	}
+}
+
 char	*read_file(int fd, char *buff)
 {
 	char	*temp;
@@ -24,28 +38,15 @@ char	*read_file(int fd, char *buff)
 	while (byte_read != 0 && !(ft_strchr(buff, '\n')))
 	{
 		byte_read = read(fd, temp, BUFFER_SIZE);
-		if (temp[0] == '\0')
-		{
-			if(buff)
-				free(buff);
-			free(temp);
-			return (NULL);
-		}
 		if (byte_read == -1)
 		{
-			free(buff);
-			free(temp);
-			buff = NULL;
-			temp = NULL;
+			free_str(buff, temp);
 			return (NULL);
 		}
 		temp[byte_read] = '\0';
 		buff = ft_strjoin(buff, temp);
-		free(temp);
-		temp = NULL;
 	}
-	free(temp);
-	temp = NULL;
+	free_str(temp, NULL);
 	return (buff);
 }
 
@@ -58,15 +59,9 @@ char	*get_the_line(char *buff)
 	if (!buff || *buff == '\0')
 		return (NULL);
 	while (buff[i] && buff[i] != '\n')
-	{
-	//	write(1, &buff[i], 1);
 		i++;
-	}
 	if (buff[i] == '\n')
-	{
-	//	write(1, "g", 1);
 		line = ft_substr(buff, 0, i + 1);
-	}
 	else
 		line = ft_substr(buff, 0, i);
 	return (line);
@@ -96,7 +91,7 @@ char	*new_line(char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff = NULL;
+	static char	*buff;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -105,18 +100,20 @@ char	*get_next_line(int fd)
 		buff = NULL;
 		return (NULL);
 	}
-	buff = read_file(fd, buff);i
+	buff = read_file(fd, buff);
 	line = get_the_line(buff);
 	buff = new_line(buff);
 	return (line);
 }
-/*
-#include <fcntl.h>
 
-int main()
-{
-	int fd = open("gnl.txt", O_RDONLY);
-	printf("%s\n", get_next_line(fd));
-//	get_next_line(fd);
-	return (0);
-}*/
+// #include <fcntl.h>
+
+// int main()
+// {
+// 	int fd = open("gnl.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// //	get_next_line(fd);
+// 	return (0);
+// }
