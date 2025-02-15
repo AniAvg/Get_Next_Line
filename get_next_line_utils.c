@@ -6,7 +6,7 @@
 /*   By: anavagya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:59:30 by anavagya          #+#    #+#             */
-/*   Updated: 2025/02/13 19:01:49 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/02/15 14:01:31 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = (char *)malloc(sizeof(char) * 1);
+		if (!s1)
+			return (NULL);
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
@@ -55,7 +57,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!str)
 		return (NULL);
 	if (s1)
-	{	
+	{
 		while (s1[i])
 		{
 			str[i] = s1[i];
@@ -69,6 +71,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str[i + j] = '\0';
 	free(s1);
+	s1 = NULL;
 	return (str);
 }
 
@@ -105,7 +108,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	str = (char *)malloc(sizeof(char) * (len + 2));
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
 	i = 0;

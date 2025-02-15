@@ -6,7 +6,7 @@
 /*   By: anavagya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:49:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/02/13 18:58:38 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:20:46 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ char	*read_file(int fd, char *buff)
 	{
 		byte_read = read(fd, temp, BUFFER_SIZE);
 		if (temp[0] == '\0')
+		{
+			if(buff)
+				free(buff);
+			free(temp);
 			return (NULL);
+		}
 		if (byte_read == -1)
 		{
 			free(buff);
@@ -36,6 +41,8 @@ char	*read_file(int fd, char *buff)
 		}
 		temp[byte_read] = '\0';
 		buff = ft_strjoin(buff, temp);
+		free(temp);
+		temp = NULL;
 	}
 	free(temp);
 	temp = NULL;
@@ -50,9 +57,18 @@ char	*get_the_line(char *buff)
 	i = 0;
 	if (!buff || *buff == '\0')
 		return (NULL);
-	while (buff[i] && buff[i] != '\n' && buff[i] != '\0')
+	while (buff[i] && buff[i] != '\n')
+	{
+	//	write(1, &buff[i], 1);
 		i++;
-	line = ft_substr(buff, 0, i + 1);
+	}
+	if (buff[i] == '\n')
+	{
+	//	write(1, "g", 1);
+		line = ft_substr(buff, 0, i + 1);
+	}
+	else
+		line = ft_substr(buff, 0, i);
 	return (line);
 }
 
@@ -80,7 +96,7 @@ char	*new_line(char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff;
+	static char	*buff = NULL;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -89,8 +105,18 @@ char	*get_next_line(int fd)
 		buff = NULL;
 		return (NULL);
 	}
-	buff = read_file(fd, buff);
+	buff = read_file(fd, buff);i
 	line = get_the_line(buff);
 	buff = new_line(buff);
 	return (line);
 }
+/*
+#include <fcntl.h>
+
+int main()
+{
+	int fd = open("gnl.txt", O_RDONLY);
+	printf("%s\n", get_next_line(fd));
+//	get_next_line(fd);
+	return (0);
+}*/
