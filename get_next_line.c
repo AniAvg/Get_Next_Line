@@ -6,7 +6,7 @@
 /*   By: anavagya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:49:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/02/15 15:20:46 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:01:17 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,3 @@ char	*get_next_line(int fd)
 	buff = new_line(buff);
 	return (line);
 }
-
-// #include <fcntl.h>
-
-// int main()
-// {
-// 	int fd = open("gnl.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// //	get_next_line(fd);
-// 	return (0);
-// }

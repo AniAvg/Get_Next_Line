@@ -6,7 +6,7 @@
 /*   By: anavagya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:39:40 by anavagya          #+#    #+#             */
-/*   Updated: 2025/02/13 17:30:48 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:01:23 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
 char	*read_file(int fd, char *buf);
