@@ -60,7 +60,7 @@ char *get_next_line(int fd);
 
 ---
 
-###🚀 Bonus Part
+## 🚀 Bonus Part
 
 - Still uses **only one static variable**.
 - Can handle **multiple file descriptors** simultaneously.
